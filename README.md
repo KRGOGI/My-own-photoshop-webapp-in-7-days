@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="logo for git.png" alt="My Own Photoshop" width="150">
+  <img src="logo for git.png" alt="My Own Photoshop" width="250">
   <h1>Welcome to My Own Photoshop Webapp</h1>
   <strong>Your new lightweight Photoshop</strong>
   <h6>Made with ❤️ by Ruthvik Sharma</h6>
