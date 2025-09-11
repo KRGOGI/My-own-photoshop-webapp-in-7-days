@@ -100,7 +100,6 @@ Just fork this repository, create a branch, and submit a pull request.
 <p align="center">
   ⭐ <strong>If you like this project, star it and share your feedback!</strong> ⭐
 </p>
----
 
 ## 🎉 Acknowledgements
 
