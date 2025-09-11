@@ -54,43 +54,13 @@ export default function ImageCanvas({
     img.src = imageUrl;
   }, [imageUrl, onImageDimensionsChange]);
 
-  // Process image data with real adjustments
-  const processImageData = useCallback((imageData: ImageData, brightness: number, contrast: number, saturation: number) => {
-    const data = imageData.data;
-    const brightnessFactor = brightness / 100;
-    const contrastFactor = contrast / 100;
-    const saturationFactor = saturation / 100;
-    
-    for (let i = 0; i < data.length; i += 4) {
-      let r = data[i];
-      let g = data[i + 1];
-      let b = data[i + 2];
-      
-      // Apply brightness
-      r = r * brightnessFactor;
-      g = g * brightnessFactor;
-      b = b * brightnessFactor;
-      
-      // Apply contrast
-      r = ((r - 128) * contrastFactor) + 128;
-      g = ((g - 128) * contrastFactor) + 128;
-      b = ((b - 128) * contrastFactor) + 128;
-      
-      // Apply saturation
-      if (saturationFactor !== 1) {
-        const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-        r = gray + (r - gray) * saturationFactor;
-        g = gray + (g - gray) * saturationFactor;
-        b = gray + (b - gray) * saturationFactor;
-      }
-      
-      // Clamp values
-      data[i] = Math.max(0, Math.min(255, r));
-      data[i + 1] = Math.max(0, Math.min(255, g));
-      data[i + 2] = Math.max(0, Math.min(255, b));
+  // Apply color adjustments using ctx.filter for perfect fidelity (same as export function)
+  const applyColorAdjustments = useCallback((ctx: CanvasRenderingContext2D, brightness: number, contrast: number, saturation: number) => {
+    if (brightness !== 100 || contrast !== 100 || saturation !== 100) {
+      ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
+    } else {
+      ctx.filter = 'none';
     }
-    
-    return imageData;
   }, []);
 
   // Calculate rotated canvas dimensions
@@ -135,15 +105,12 @@ export default function ImageCanvas({
     tempCanvas.width = baseWidth;
     tempCanvas.height = baseHeight;
 
-    // Draw original image to temp canvas
+    // Apply color adjustments using ctx.filter (same as export function)
+    applyColorAdjustments(tempCtx, brightness, contrast, saturation);
+    
+    // Draw original image to temp canvas with filter applied
     tempCtx.drawImage(image, 0, 0);
-
-    // Only process if adjustments are not at default values
-    if (brightness !== 100 || contrast !== 100 || saturation !== 100) {
-      const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
-      const processedData = processImageData(imageData, brightness, contrast, saturation);
-      tempCtx.putImageData(processedData, 0, 0);
-    }
+    tempCtx.filter = 'none'; // Reset filter
 
     // Clear canvas with transparent background
     ctx.clearRect(0, 0, displayWidth, displayHeight);
@@ -164,7 +131,7 @@ export default function ImageCanvas({
     );
     
     ctx.restore();
-  }, [image, zoom, brightness, contrast, saturation, rotation, flipHorizontal, flipVertical, processImageData, getRotatedDimensions]);
+  }, [image, zoom, brightness, contrast, saturation, rotation, flipHorizontal, flipVertical, applyColorAdjustments, getRotatedDimensions]);
 
   useEffect(() => {
     drawImage();

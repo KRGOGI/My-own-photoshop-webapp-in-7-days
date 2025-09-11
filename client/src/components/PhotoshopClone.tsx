@@ -3,6 +3,7 @@ import ImageUploader from './ImageUploader';
 import EditingToolbar, { Tool } from './EditingToolbar';
 import ImageCanvas from './ImageCanvas';
 import AdjustmentPanel from './AdjustmentPanel';
+import { useToast } from '@/hooks/use-toast';
 
 interface ImageState {
   file: File;
@@ -20,10 +21,12 @@ interface HistoryState extends ImageState {
 }
 
 export default function PhotoshopClone() {
+  const { toast } = useToast();
   const [image, setImage] = useState<ImageState | null>(null);
   const [selectedTool, setSelectedTool] = useState<Tool>('move');
   const [zoom, setZoom] = useState(1);
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | undefined>();
+  const [exportQuality, setExportQuality] = useState(0.92);
   
   // History management
   const [history, setHistory] = useState<HistoryState[]>([]);
@@ -133,8 +136,7 @@ export default function PhotoshopClone() {
         break;
         
       case 'download':
-        console.log('Download triggered for:', image.file.name);
-        // In a real implementation, this would process the canvas and download
+        handleImageDownload();
         break;
         
       default:
@@ -150,6 +152,162 @@ export default function PhotoshopClone() {
       saturation: 100,
     });
   }, [image, updateImage]);
+
+  const handleImageDownload = useCallback(async (exportFormat = 'png') => {
+    if (!image) return;
+
+    try {
+      const img = new Image();
+      img.crossOrigin = 'anonymous'; // Enable CORS for better compatibility
+      
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = () => reject(new Error('Failed to load image'));
+        img.src = image.url;
+      });
+
+      // Helper function to calculate rotated dimensions
+      const getRotatedDimensions = (width: number, height: number, rotation: number) => {
+        const rad = (rotation * Math.PI) / 180;
+        const cos = Math.abs(Math.cos(rad));
+        const sin = Math.abs(Math.sin(rad));
+        return {
+          width: Math.ceil(width * cos + height * sin),
+          height: Math.ceil(width * sin + height * cos)
+        };
+      };
+
+      const baseWidth = img.naturalWidth;
+      const baseHeight = img.naturalHeight;
+      
+      // Step 1: Create canvas with color adjustments using ctx.filter (matches live preview)
+      const tempCanvas = document.createElement('canvas');
+      const tempCtx = tempCanvas.getContext('2d');
+      if (!tempCtx) {
+        throw new Error('Failed to create canvas context');
+      }
+
+      tempCanvas.width = baseWidth;
+      tempCanvas.height = baseHeight;
+      
+      // Apply color adjustments using ctx.filter for perfect fidelity match with live preview
+      if (image.brightness !== 100 || image.contrast !== 100 || image.saturation !== 100) {
+        tempCtx.filter = `brightness(${image.brightness}%) contrast(${image.contrast}%) saturate(${image.saturation}%)`;
+      }
+      
+      // Draw original image to temp canvas with filter applied
+      tempCtx.drawImage(img, 0, 0);
+      tempCtx.filter = 'none'; // Reset filter
+
+      // Step 2: Create final canvas with transformations
+      let finalCanvas = tempCanvas;
+      let finalCtx = tempCtx;
+      
+      if (image.rotation !== 0 || image.flipHorizontal || image.flipVertical) {
+        const rotatedDims = getRotatedDimensions(baseWidth, baseHeight, image.rotation);
+        
+        finalCanvas = document.createElement('canvas');
+        finalCtx = finalCanvas.getContext('2d');
+        if (!finalCtx) {
+          throw new Error('Failed to create transformation canvas context');
+        }
+
+        finalCanvas.width = rotatedDims.width;
+        finalCanvas.height = rotatedDims.height;
+        
+        // Apply transformations
+        finalCtx.save();
+        finalCtx.translate(rotatedDims.width / 2, rotatedDims.height / 2);
+        finalCtx.rotate((image.rotation * Math.PI) / 180);
+        finalCtx.scale(image.flipHorizontal ? -1 : 1, image.flipVertical ? -1 : 1);
+        
+        finalCtx.drawImage(
+          tempCanvas,
+          -baseWidth / 2,
+          -baseHeight / 2,
+          baseWidth,
+          baseHeight
+        );
+        
+        finalCtx.restore();
+      }
+      
+      // Step 3: Export with format handling and fallback
+      const originalName = image.file.name;
+      const nameWithoutExt = originalName.replace(/\.[^/.]+$/, '');
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+      
+      // Determine format and quality
+      let mimeType = '';
+      let extension = '';
+      let quality: number | undefined = undefined;
+      
+      switch (exportFormat.toLowerCase()) {
+        case 'jpeg':
+        case 'jpg':
+          mimeType = 'image/jpeg';
+          extension = 'jpg';
+          quality = exportQuality;
+          break;
+        default:
+          mimeType = 'image/png';
+          extension = 'png';
+      }
+      
+      const filename = `${nameWithoutExt}_edited_${timestamp}.${extension}`;
+      
+      // Try primary export format
+      const tryExport = (type: string, ext: string, qual?: number): Promise<Blob | null> => {
+        return new Promise((resolve) => {
+          finalCanvas.toBlob((blob) => {
+            resolve(blob);
+          }, type, qual);
+        });
+      };
+      
+      let blob = await tryExport(mimeType, extension, quality);
+      let finalFilename = filename;
+      
+      // Fallback to PNG if primary format fails
+      if (!blob && mimeType !== 'image/png') {
+        console.warn(`Export as ${mimeType} failed, falling back to PNG`);
+        blob = await tryExport('image/png', 'png');
+        finalFilename = `${nameWithoutExt}_edited_${timestamp}.png`;
+        
+        toast({
+          title: 'Format fallback',
+          description: `Export as ${mimeType.split('/')[1].toUpperCase()} failed. Saved as PNG instead.`,
+        });
+      }
+      
+      if (!blob) {
+        throw new Error('Export failed - unable to create image blob');
+      }
+      
+      // Create download
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = finalFilename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+      toast({
+        title: 'Export successful',
+        description: `Image saved as ${finalFilename}`,
+      });
+      
+    } catch (error) {
+      console.error('Export error:', error);
+      toast({
+        title: 'Export failed',
+        description: error instanceof Error ? error.message : 'Unknown export error',
+        variant: 'destructive',
+      });
+    }
+  }, [image, exportQuality, toast]);
 
   const handleCropApply = useCallback((cropData: { x: number; y: number; width: number; height: number }) => {
     if (!image) return;
