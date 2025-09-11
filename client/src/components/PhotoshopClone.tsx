@@ -178,6 +178,7 @@ export default function PhotoshopClone() {
               onImageDimensionsChange={setImageDimensions}
               brightness={image.brightness}
               contrast={image.contrast}
+              saturation={image.saturation}
               rotation={image.rotation}
               flipHorizontal={image.flipHorizontal}
               flipVertical={image.flipVertical}

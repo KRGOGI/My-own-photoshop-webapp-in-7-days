@@ -17,6 +17,7 @@ export default function ImageCanvasExample() {
         onImageDimensionsChange={setDimensions}
         brightness={100}
         contrast={100}
+        saturation={100}
         rotation={0}
         flipHorizontal={false}
         flipVertical={false}

@@ -9,6 +9,7 @@ interface ImageCanvasProps {
   onImageDimensionsChange: (dimensions: { width: number; height: number }) => void;
   brightness: number;
   contrast: number;
+  saturation: number;
   rotation: number;
   flipHorizontal: boolean;
   flipVertical: boolean;
@@ -21,6 +22,7 @@ export default function ImageCanvas({
   onImageDimensionsChange,
   brightness,
   contrast,
+  saturation,
   rotation,
   flipHorizontal,
   flipVertical
@@ -43,7 +45,46 @@ export default function ImageCanvas({
     img.src = imageUrl;
   }, [imageUrl, onImageDimensionsChange]);
 
-  // Draw image with filters
+  // Process image data with real adjustments
+  const processImageData = useCallback((imageData: ImageData, brightness: number, contrast: number, saturation: number) => {
+    const data = imageData.data;
+    const brightnessFactor = brightness / 100;
+    const contrastFactor = contrast / 100;
+    const saturationFactor = saturation / 100;
+    
+    for (let i = 0; i < data.length; i += 4) {
+      let r = data[i];
+      let g = data[i + 1];
+      let b = data[i + 2];
+      
+      // Apply brightness
+      r = r * brightnessFactor;
+      g = g * brightnessFactor;
+      b = b * brightnessFactor;
+      
+      // Apply contrast
+      r = ((r - 128) * contrastFactor) + 128;
+      g = ((g - 128) * contrastFactor) + 128;
+      b = ((b - 128) * contrastFactor) + 128;
+      
+      // Apply saturation
+      if (saturationFactor !== 1) {
+        const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+        r = gray + (r - gray) * saturationFactor;
+        g = gray + (g - gray) * saturationFactor;
+        b = gray + (b - gray) * saturationFactor;
+      }
+      
+      // Clamp values
+      data[i] = Math.max(0, Math.min(255, r));
+      data[i + 1] = Math.max(0, Math.min(255, g));
+      data[i + 2] = Math.max(0, Math.min(255, b));
+    }
+    
+    return imageData;
+  }, []);
+
+  // Draw image with real processing
   const drawImage = useCallback(() => {
     if (!image || !canvasRef.current) return;
 
@@ -57,18 +98,32 @@ export default function ImageCanvas({
     canvas.width = displayWidth;
     canvas.height = displayHeight;
 
+    // Create temporary canvas for processing
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    if (!tempCtx) return;
+
+    tempCanvas.width = image.naturalWidth;
+    tempCanvas.height = image.naturalHeight;
+
+    // Draw original image to temp canvas
+    tempCtx.drawImage(image, 0, 0);
+
+    // Only process if adjustments are not at default values
+    if (brightness !== 100 || contrast !== 100 || saturation !== 100) {
+      const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+      const processedData = processImageData(imageData, brightness, contrast, saturation);
+      tempCtx.putImageData(processedData, 0, 0);
+    }
+
+    // Apply transformations to main canvas
     ctx.save();
-    
-    // Apply transformations
     ctx.translate(displayWidth / 2, displayHeight / 2);
     ctx.rotate((rotation * Math.PI) / 180);
     ctx.scale(flipHorizontal ? -1 : 1, flipVertical ? -1 : 1);
     
-    // Apply filters
-    ctx.filter = `brightness(${brightness}%) contrast(${contrast}%)`;
-    
     ctx.drawImage(
-      image,
+      tempCanvas,
       -displayWidth / 2,
       -displayHeight / 2,
       displayWidth,
@@ -76,7 +131,7 @@ export default function ImageCanvas({
     );
     
     ctx.restore();
-  }, [image, zoom, brightness, contrast, rotation, flipHorizontal, flipVertical]);
+  }, [image, zoom, brightness, contrast, saturation, rotation, flipHorizontal, flipVertical, processImageData]);
 
   useEffect(() => {
     drawImage();
