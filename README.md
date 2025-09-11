@@ -45,8 +45,7 @@ This webapp is currently optimized for **Desktop/Tablet browsers** (Chrome, Fire
 Follow these steps to run the project locally:
 
 1. **Fork** this project
-
-![Forking the project](https://camo.githubusercontent.com/6f03010c651d060f8b7cfc17da7098c1757c4ead/68747470733a2f2f6669727374636f6e747269627574696f6e732e6769746875622e696f2f6173736574732f526561646d652f666f726b2e706e67)
+>Click the **Fork** button at the top right of this page to create your own copy of this repository.
 
 2. **Clone** the forked repository  
 ```bash
