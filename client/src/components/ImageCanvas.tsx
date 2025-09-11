@@ -84,6 +84,18 @@ export default function ImageCanvas({
     return imageData;
   }, []);
 
+  // Calculate rotated canvas dimensions
+  const getRotatedDimensions = useCallback((width: number, height: number, rotation: number) => {
+    const rad = (rotation * Math.PI) / 180;
+    const cos = Math.abs(Math.cos(rad));
+    const sin = Math.abs(Math.sin(rad));
+    
+    return {
+      width: Math.ceil(width * cos + height * sin),
+      height: Math.ceil(width * sin + height * cos)
+    };
+  }, []);
+
   // Draw image with real processing
   const drawImage = useCallback(() => {
     if (!image || !canvasRef.current) return;
@@ -92,8 +104,16 @@ export default function ImageCanvas({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const displayWidth = image.naturalWidth * zoom;
-    const displayHeight = image.naturalHeight * zoom;
+    // Calculate base dimensions
+    const baseWidth = image.naturalWidth;
+    const baseHeight = image.naturalHeight;
+    
+    // Calculate dimensions after rotation
+    const rotatedDims = getRotatedDimensions(baseWidth, baseHeight, rotation);
+    
+    // Apply zoom to final dimensions
+    const displayWidth = rotatedDims.width * zoom;
+    const displayHeight = rotatedDims.height * zoom;
 
     canvas.width = displayWidth;
     canvas.height = displayHeight;
@@ -103,8 +123,8 @@ export default function ImageCanvas({
     const tempCtx = tempCanvas.getContext('2d');
     if (!tempCtx) return;
 
-    tempCanvas.width = image.naturalWidth;
-    tempCanvas.height = image.naturalHeight;
+    tempCanvas.width = baseWidth;
+    tempCanvas.height = baseHeight;
 
     // Draw original image to temp canvas
     tempCtx.drawImage(image, 0, 0);
@@ -116,22 +136,26 @@ export default function ImageCanvas({
       tempCtx.putImageData(processedData, 0, 0);
     }
 
+    // Clear canvas with transparent background
+    ctx.clearRect(0, 0, displayWidth, displayHeight);
+
     // Apply transformations to main canvas
     ctx.save();
     ctx.translate(displayWidth / 2, displayHeight / 2);
     ctx.rotate((rotation * Math.PI) / 180);
     ctx.scale(flipHorizontal ? -1 : 1, flipVertical ? -1 : 1);
     
+    // Draw the processed image
     ctx.drawImage(
       tempCanvas,
-      -displayWidth / 2,
-      -displayHeight / 2,
-      displayWidth,
-      displayHeight
+      -(baseWidth * zoom) / 2,
+      -(baseHeight * zoom) / 2,
+      baseWidth * zoom,
+      baseHeight * zoom
     );
     
     ctx.restore();
-  }, [image, zoom, brightness, contrast, saturation, rotation, flipHorizontal, flipVertical, processImageData]);
+  }, [image, zoom, brightness, contrast, saturation, rotation, flipHorizontal, flipVertical, processImageData, getRotatedDimensions]);
 
   useEffect(() => {
     drawImage();
