@@ -62,7 +62,7 @@ npm install
 npm run dev
 ```
 
-5.Open http://localhost:3000 in your browser and start editing!
+5. Open the localhost link generated in your browser and start editing!
 
 ---
 
