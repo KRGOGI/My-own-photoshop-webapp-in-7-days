@@ -64,3 +64,52 @@ npm run dev
 ```
 
 5.Open http://localhost:3000 in your browser and start editing!
+
+---
+
+## ✨ Features
+
+* ✂️ **Crop / Resize** — Quickly trim or resize images
+* 🎛 **Filters** — Adjust brightness, contrast, saturation
+* 🖌 **Drawing Tools** — Freehand brush with adjustable size
+* ↩ **Undo / Redo** — Reverse or re-apply edits
+* 💾 **Export** — Save as PNG or JPG
+
+---
+
+## 🙌 Want to Contribute?
+
+You’re more than welcome to contribute! You can:
+
+* 🤔 Request or suggest a new feature  
+* 🐛 Report a bug  
+* 📖 Improve the documentation  
+* 💻 Contribute with code  
+
+Just fork this repository, create a branch, and submit a pull request.  
+
+---
+
+## ⭐ Rate This Project
+
+<p>
+  <a href="https://github.com/ruthviksharma-d/My-own-photoshop-webapp-in-7-days">
+    <img alt="GitHub Stars" align="center" src="https://img.shields.io/github/stars/ruthviksharma-d/My-own-photoshop-webapp-in-7-days?style=for-the-badge" />
+  </a> &nbsp; If you like this project, give it a ⭐ on GitHub and share your feedback!
+</p>
+
+---
+
+## 🎉 Acknowledgements
+
+Special thanks to:
+
+* Open-source tools and libraries that made this possible  
+* Inspirations from Photoshop, Canva, and other editors  
+* The dev community for guidance and ideas  
+
+---
+
+## 📑 License
+
+Distributed under the [MIT License](./LICENSE).
