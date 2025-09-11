@@ -21,6 +21,8 @@ export default function ImageCanvasExample() {
         rotation={0}
         flipHorizontal={false}
         flipVertical={false}
+        selectedTool="move"
+        onCropApply={(cropData) => console.log('Crop applied:', cropData)}
       />
     </div>
   );
