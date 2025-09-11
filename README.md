@@ -23,9 +23,8 @@ This webapp is currently optimized for **Desktop/Tablet browsers** (Chrome, Fire
 <p align="center">
   <img src="image for git.png" alt="My Own Photoshop Webapp Preview">
   <br>
-  <a href="https://my-own-photoshop-webapp-in-7-days.vercel.app" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:12px 28px; font-size:1.1rem; font-weight:600; color:#fff; background:linear-gradient(90deg,#ff512f,#dd2476); border-radius:8px; text-decoration:none; box-shadow:0 2px 8px rgba(221,36,118,0.15); transition:background 0.2s;">
-  🚀 <span style="vertical-align:middle;">Try Now</span>
-</a>
+  [🚀 **Try Now**](https://my-own-photoshop-webapp-in-7-days.vercel.app)
+  <br>
 </p>
 
 ---
