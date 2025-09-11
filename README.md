@@ -24,9 +24,10 @@ This webapp is currently optimized for **Desktop/Tablet browsers** (Chrome, Fire
   <img src="image for git.png" alt="My Own Photoshop Webapp Preview">
   <p align="center">
   <a href="https://my-own-photoshop-webapp-in-7-days.vercel.app" target="_blank">
-    <img src="https://img.shields.io/badge/🚀%20TRY%20NOW-00C853?style=for-the-badge&logo=vercel&logoColor=white" alt="Try Now Button">
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGoxamZnYjVkaXk3bXU3eG55Zmc3dDExbTRmaGg1NXpsdXJsaTFxeCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/g9582DNuQppxC/giphy.gif" alt="Try Now" width="180">
   </a>
 </p>
+
 </p>
 
 ---
