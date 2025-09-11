@@ -21,7 +21,7 @@
 This webapp is currently optimized for **Desktop/Tablet browsers** (Chrome, Firefox, Edge) for the best experience.
 
 <p align="center">
-  <img src="./public/images/preview.png" alt="My Own Photoshop Webapp Preview">
+  <img src="image for git.png" alt="My Own Photoshop Webapp Preview">
   <br>
   <a href="https://my-own-photoshop-webapp-in-7-days.vercel.app">
     <strong>🚀 Try Now</strong>
