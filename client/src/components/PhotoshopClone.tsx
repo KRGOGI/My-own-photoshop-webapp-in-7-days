@@ -14,6 +14,10 @@ interface ImageState {
   rotation: number;
   flipHorizontal: boolean;
   flipVertical: boolean;
+  grayscale: boolean;
+  sepia: boolean;
+  blur: number;
+  sharpen: number;
 }
 
 interface HistoryState extends ImageState {
@@ -70,6 +74,10 @@ export default function PhotoshopClone() {
       rotation: 0,
       flipHorizontal: false,
       flipVertical: false,
+      grayscale: false,
+      sepia: false,
+      blur: 0,
+      sharpen: 0,
     };
     
     setImage(initialState);
@@ -101,6 +109,10 @@ export default function PhotoshopClone() {
             rotation: prevState.rotation,
             flipHorizontal: prevState.flipHorizontal,
             flipVertical: prevState.flipVertical,
+            grayscale: prevState.grayscale,
+            sepia: prevState.sepia,
+            blur: prevState.blur,
+            sharpen: prevState.sharpen,
           });
           setHistoryIndex(prev => prev - 1);
         }
@@ -118,6 +130,10 @@ export default function PhotoshopClone() {
             rotation: nextState.rotation,
             flipHorizontal: nextState.flipHorizontal,
             flipVertical: nextState.flipVertical,
+            grayscale: nextState.grayscale,
+            sepia: nextState.sepia,
+            blur: nextState.blur,
+            sharpen: nextState.sharpen,
           });
           setHistoryIndex(prev => prev + 1);
         }
@@ -150,6 +166,10 @@ export default function PhotoshopClone() {
       brightness: 100,
       contrast: 100,
       saturation: 100,
+      grayscale: false,
+      sepia: false,
+      blur: 0,
+      sharpen: 0,
     });
   }, [image, updateImage]);
 
@@ -190,9 +210,25 @@ export default function PhotoshopClone() {
       tempCanvas.width = baseWidth;
       tempCanvas.height = baseHeight;
       
-      // Apply color adjustments using ctx.filter for perfect fidelity match with live preview
-      if (image.brightness !== 100 || image.contrast !== 100 || image.saturation !== 100) {
-        tempCtx.filter = `brightness(${image.brightness}%) contrast(${image.contrast}%) saturate(${image.saturation}%)`;
+      // Apply all filters using ctx.filter for perfect fidelity match with live preview
+      const filters = [];
+      
+      // Basic adjustments
+      if (image.brightness !== 100) filters.push(`brightness(${image.brightness}%)`);
+      if (image.contrast !== 100 || image.sharpen > 0) {
+        // Approximate sharpen as additional contrast for simplicity
+        const totalContrast = image.contrast + (image.sharpen * 0.5); // sharpen contributes to contrast
+        filters.push(`contrast(${totalContrast}%)`);
+      }
+      if (image.saturation !== 100) filters.push(`saturate(${image.saturation}%)`);
+      
+      // Filter effects
+      if (image.grayscale) filters.push('grayscale(100%)');
+      if (image.sepia) filters.push('sepia(100%)');
+      if (image.blur > 0) filters.push(`blur(${image.blur}px)`);
+      
+      if (filters.length > 0) {
+        tempCtx.filter = filters.join(' ');
       }
       
       // Draw original image to temp canvas with filter applied
@@ -376,15 +412,30 @@ export default function PhotoshopClone() {
       tempCanvas.width = baseWidth;
       tempCanvas.height = baseHeight;
       
-      // Draw original image to temp canvas
-      tempCtx.drawImage(img, 0, 0);
+      // Apply all filters using ctx.filter for consistency with live preview and export
+      const filters = [];
       
-      // Apply color adjustments if they're not at default values
-      if (image.brightness !== 100 || image.contrast !== 100 || image.saturation !== 100) {
-        const imageData = tempCtx.getImageData(0, 0, baseWidth, baseHeight);
-        const processedData = processImageData(imageData, image.brightness, image.contrast, image.saturation);
-        tempCtx.putImageData(processedData, 0, 0);
+      // Basic adjustments
+      if (image.brightness !== 100) filters.push(`brightness(${image.brightness}%)`);
+      if (image.contrast !== 100 || image.sharpen > 0) {
+        // Approximate sharpen as additional contrast for simplicity
+        const totalContrast = image.contrast + (image.sharpen * 0.5); // sharpen contributes to contrast
+        filters.push(`contrast(${totalContrast}%)`);
       }
+      if (image.saturation !== 100) filters.push(`saturate(${image.saturation}%)`);
+      
+      // Filter effects
+      if (image.grayscale) filters.push('grayscale(100%)');
+      if (image.sepia) filters.push('sepia(100%)');
+      if (image.blur > 0) filters.push(`blur(${image.blur}px)`);
+      
+      if (filters.length > 0) {
+        tempCtx.filter = filters.join(' ');
+      }
+      
+      // Draw original image to temp canvas with filters applied
+      tempCtx.drawImage(img, 0, 0);
+      tempCtx.filter = 'none'; // Reset filter
 
       // Step 2: Create transformed canvas that bakes in rotation and flip (WYSIWYG)
       const rotatedDims = getRotatedDimensions(baseWidth, baseHeight, image.rotation);
@@ -500,6 +551,10 @@ export default function PhotoshopClone() {
             rotation: 0,
             flipHorizontal: false,
             flipVertical: false,
+            grayscale: false,
+            sepia: false,
+            blur: 0,
+            sharpen: 0,
           };
           
           setImage(newImageState);
@@ -548,6 +603,10 @@ export default function PhotoshopClone() {
               rotation={image.rotation}
               flipHorizontal={image.flipHorizontal}
               flipVertical={image.flipVertical}
+              grayscale={image.grayscale}
+              sepia={image.sepia}
+              blur={image.blur}
+              sharpen={image.sharpen}
               selectedTool={selectedTool}
               onCropApply={handleCropApply}
             />
@@ -567,6 +626,14 @@ export default function PhotoshopClone() {
             onContrastChange={(value) => updateImage({ contrast: value })}
             saturation={image.saturation}
             onSaturationChange={(value) => updateImage({ saturation: value })}
+            grayscale={image.grayscale}
+            onGrayscaleChange={(value) => updateImage({ grayscale: value })}
+            sepia={image.sepia}
+            onSepiaChange={(value) => updateImage({ sepia: value })}
+            blur={image.blur}
+            onBlurChange={(value) => updateImage({ blur: value })}
+            sharpen={image.sharpen}
+            onSharpenChange={(value) => updateImage({ sharpen: value })}
             onReset={handleResetAdjustments}
           />
         )}

@@ -1,6 +1,7 @@
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { RotateCcw } from 'lucide-react';
 
 interface AdjustmentPanelProps {
@@ -10,6 +11,14 @@ interface AdjustmentPanelProps {
   onContrastChange: (value: number) => void;
   saturation: number;
   onSaturationChange: (value: number) => void;
+  grayscale: boolean;
+  onGrayscaleChange: (value: boolean) => void;
+  sepia: boolean;
+  onSepiaChange: (value: boolean) => void;
+  blur: number;
+  onBlurChange: (value: number) => void;
+  sharpen: number;
+  onSharpenChange: (value: number) => void;
   onReset: () => void;
 }
 
@@ -20,6 +29,14 @@ export default function AdjustmentPanel({
   onContrastChange,
   saturation,
   onSaturationChange,
+  grayscale,
+  onGrayscaleChange,
+  sepia,
+  onSepiaChange,
+  blur,
+  onBlurChange,
+  sharpen,
+  onSharpenChange,
   onReset
 }: AdjustmentPanelProps) {
   return (
@@ -101,6 +118,81 @@ export default function AdjustmentPanel({
             className="w-full"
             data-testid="slider-saturation"
           />
+        </div>
+
+        {/* Filters */}
+        <div className="space-y-4 pt-2 border-t border-border">
+          <Label className="text-sm font-medium">Filters</Label>
+          
+          {/* Grayscale */}
+          <div className="flex items-center justify-between">
+            <Label htmlFor="grayscale" className="text-sm font-medium">
+              Grayscale
+            </Label>
+            <Switch
+              id="grayscale"
+              checked={grayscale}
+              onCheckedChange={onGrayscaleChange}
+              data-testid="switch-grayscale"
+            />
+          </div>
+
+          {/* Sepia */}
+          <div className="flex items-center justify-between">
+            <Label htmlFor="sepia" className="text-sm font-medium">
+              Sepia
+            </Label>
+            <Switch
+              id="sepia"
+              checked={sepia}
+              onCheckedChange={onSepiaChange}
+              data-testid="switch-sepia"
+            />
+          </div>
+
+          {/* Blur */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="blur" className="text-sm font-medium">
+                Blur
+              </Label>
+              <span className="text-sm text-muted-foreground" data-testid="text-blur-value">
+                {blur}px
+              </span>
+            </div>
+            <Slider
+              id="blur"
+              value={[blur]}
+              onValueChange={(value) => onBlurChange(value[0])}
+              min={0}
+              max={10}
+              step={0.5}
+              className="w-full"
+              data-testid="slider-blur"
+            />
+          </div>
+
+          {/* Sharpen */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="sharpen" className="text-sm font-medium">
+                Sharpen
+              </Label>
+              <span className="text-sm text-muted-foreground" data-testid="text-sharpen-value">
+                {sharpen}%
+              </span>
+            </div>
+            <Slider
+              id="sharpen"
+              value={[sharpen]}
+              onValueChange={(value) => onSharpenChange(value[0])}
+              min={0}
+              max={200}
+              step={10}
+              className="w-full"
+              data-testid="slider-sharpen"
+            />
+          </div>
         </div>
       </div>
 

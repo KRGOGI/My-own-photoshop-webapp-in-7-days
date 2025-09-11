@@ -14,6 +14,10 @@ interface ImageCanvasProps {
   rotation: number;
   flipHorizontal: boolean;
   flipVertical: boolean;
+  grayscale: boolean;
+  sepia: boolean;
+  blur: number;
+  sharpen: number;
   selectedTool: Tool;
   onCropApply: (cropData: { x: number; y: number; width: number; height: number }) => void;
 }
@@ -29,6 +33,10 @@ export default function ImageCanvas({
   rotation,
   flipHorizontal,
   flipVertical,
+  grayscale,
+  sepia,
+  blur,
+  sharpen,
   selectedTool,
   onCropApply
 }: ImageCanvasProps) {
@@ -54,13 +62,25 @@ export default function ImageCanvas({
     img.src = imageUrl;
   }, [imageUrl, onImageDimensionsChange]);
 
-  // Apply color adjustments using ctx.filter for perfect fidelity (same as export function)
-  const applyColorAdjustments = useCallback((ctx: CanvasRenderingContext2D, brightness: number, contrast: number, saturation: number) => {
-    if (brightness !== 100 || contrast !== 100 || saturation !== 100) {
-      ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
-    } else {
-      ctx.filter = 'none';
+  // Apply all filters using ctx.filter for perfect fidelity (same as export function)
+  const applyAllFilters = useCallback((ctx: CanvasRenderingContext2D, brightness: number, contrast: number, saturation: number, grayscale: boolean, sepia: boolean, blur: number, sharpen: number) => {
+    const filters = [];
+    
+    // Basic adjustments
+    if (brightness !== 100) filters.push(`brightness(${brightness}%)`);
+    if (contrast !== 100 || sharpen > 0) {
+      // Approximate sharpen as additional contrast for simplicity
+      const totalContrast = contrast + (sharpen * 0.5); // sharpen contributes to contrast
+      filters.push(`contrast(${totalContrast}%)`);
     }
+    if (saturation !== 100) filters.push(`saturate(${saturation}%)`);
+    
+    // Filter effects
+    if (grayscale) filters.push('grayscale(100%)');
+    if (sepia) filters.push('sepia(100%)');
+    if (blur > 0) filters.push(`blur(${blur}px)`);
+    
+    ctx.filter = filters.length > 0 ? filters.join(' ') : 'none';
   }, []);
 
   // Calculate rotated canvas dimensions
@@ -105,8 +125,8 @@ export default function ImageCanvas({
     tempCanvas.width = baseWidth;
     tempCanvas.height = baseHeight;
 
-    // Apply color adjustments using ctx.filter (same as export function)
-    applyColorAdjustments(tempCtx, brightness, contrast, saturation);
+    // Apply all filters using ctx.filter (same as export function)
+    applyAllFilters(tempCtx, brightness, contrast, saturation, grayscale, sepia, blur, sharpen);
     
     // Draw original image to temp canvas with filter applied
     tempCtx.drawImage(image, 0, 0);
@@ -131,7 +151,7 @@ export default function ImageCanvas({
     );
     
     ctx.restore();
-  }, [image, zoom, brightness, contrast, saturation, rotation, flipHorizontal, flipVertical, applyColorAdjustments, getRotatedDimensions]);
+  }, [image, zoom, brightness, contrast, saturation, rotation, flipHorizontal, flipVertical, grayscale, sepia, blur, sharpen, applyAllFilters, getRotatedDimensions]);
 
   useEffect(() => {
     drawImage();
