@@ -91,13 +91,15 @@ Just fork this repository, create a branch, and submit a pull request.
 ---
 
 ## ⭐ Rate This Project
-
-<p>
-  <a href="https://github.com/ruthviksharma-d/My-own-photoshop-webapp-in-7-days">
-    <img alt="GitHub Stars" align="center" src="https://img.shields.io/github/stars/ruthviksharma-d/My-own-photoshop-webapp-in-7-days?style=for-the-badge" />
-  </a> &nbsp; If you like this project, give it a ⭐ on GitHub and share your feedback!
+<p align="center">
+  <a href="https://github.com/ruthviksharma-d/My-own-photoshop-webapp-in-7-days" target="_blank">
+    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/ruthviksharma-d/My-own-photoshop-webapp-in-7-days?style=for-the-badge&logo=github&label=Give%20a%20Star&color=yellow">
+  </a>
 </p>
 
+<p align="center">
+  ⭐ <strong>If you like this project, star it and share your feedback!</strong> ⭐
+</p>
 ---
 
 ## 🎉 Acknowledgements
