@@ -113,6 +113,11 @@ Special thanks to:
 
 ---
 
+![Visitor Count](https://profile-counter.glitch.me/ruthviksharma-d-My-own-photoshop-webapp-in-7-days/count.svg)
+
+
+---
+
 ## 📑 License
 
 Distributed under the [MIT License](./LICENSE).
