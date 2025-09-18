@@ -113,7 +113,7 @@ Special thanks to:
 
 ---
 
-![Visitors](https://visitorbadge.io/api/visitors?path=ruthviksharma-d.My-own-photoshop-webapp-in-7-days&label=Repo%20Views&countColor=%23007EC6&style=for-the-badge)
+![Visitor Count](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/ruthviksharma-d/My-own-photoshop-webapp-in-7-days&title=Visitors)
 
 ---
 
