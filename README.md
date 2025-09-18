@@ -113,7 +113,7 @@ Special thanks to:
 
 ---
 
-![Visitor Count](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/ruthviksharma-d/My-own-photoshop-webapp-in-7-days&title=Visitors)
+![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=jwenjian.visitor-badge&format=true)
 
 ---
 
