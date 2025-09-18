@@ -113,7 +113,7 @@ Special thanks to:
 
 ---
 
-![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=jwenjian.visitor-badge&format=true)
+![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=ruthviksharma-d.My-own-photoshop-webapp-in-7-days)
 
 ---
 
